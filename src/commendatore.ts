@@ -39,7 +39,12 @@ export interface CommandLineDefinition {
     description: string;
     examples: string[];
     exitCodes: readonly ExitCode[];
+    /** Título de la lista de códigos de salida en la ayuda; por omisión, `Códigos de salida:` (sirve para comandos con la ayuda en otro idioma). */
+    exitCodesHeading?: string;
 }
+
+/** Título de la lista de códigos de salida cuando la definición no indica otro. */
+export const DEFAULT_EXIT_CODES_HEADING = 'Códigos de salida:';
 
 /** Cómo se escribe la línea con la versión. Va aparte de la definición para que sus tipos salgan de lo que interpretó cleye. */
 export interface VersionLineOptions<Parsed> {
@@ -84,11 +89,11 @@ export function versionLine(identity: PackageIdentity): string {
 }
 
 /** Descripción para la ayuda: el texto del comando seguido de la lista de códigos de salida. */
-export function helpDescription(description: string, exitCodes: readonly ExitCode[]): string {
+export function helpDescription(description: string, exitCodes: readonly ExitCode[], heading: string = DEFAULT_EXIT_CODES_HEADING): string {
     return [
         description,
         '',
-        'Códigos de salida:',
+        heading,
         ...exitCodes.map(function (exitCode) { return `  ${exitCode.code}  ${exitCode.description}`; }),
     ].join('\n');
 }
@@ -110,7 +115,7 @@ export function parseCommandLine<Parsed>(
         version: identity.version,
         strictFlags: true,
         help: {
-            description: helpDescription(definition.description, definition.exitCodes),
+            description: helpDescription(definition.description, definition.exitCodes, definition.exitCodesHeading),
             examples: definition.examples,
         },
     });

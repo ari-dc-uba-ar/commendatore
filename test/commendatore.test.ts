@@ -40,6 +40,7 @@ describe('commendatore', function () {
 
     it('helpDescription agrega los códigos de salida', function () {
         assert.equal(helpDescription('Hace algo.', EXIT_CODES), 'Hace algo.\n\nCódigos de salida:\n  0  todo bien\n  3  error de configuración');
+        assert.equal(helpDescription('Does something.', [{ code: 0, description: 'done' }], 'Exit codes:'), 'Does something.\n\nExit codes:\n  0  done');
     });
 
     describe('parseCommandLine', function () {
