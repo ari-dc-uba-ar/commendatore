@@ -1,6 +1,6 @@
 {
   "name": "commendatore",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Forma común de armar la línea de comandos de las herramientas: versión en la primera línea, códigos de salida en la ayuda y flags estrictos, sobre cleye",
   "author": "ari.dc.uba.ar",
   "license": "MIT",
