@@ -1,0 +1,6 @@
+{
+  "all": true,
+  "include": ["dist/**/*.js"],
+  "exclude": ["**/*.d.ts"],
+  "reporter": ["text", "lcov"]
+}
