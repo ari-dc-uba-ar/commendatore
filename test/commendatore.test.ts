@@ -3,8 +3,8 @@ import { mkdir, mkdtemp, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { cli, command, helpDescription, parseCommandLine, readPackageIdentity, versionLine } from '../dist/commendatore.js';
-import type { ExitCode } from '../dist/commendatore.js';
+import { cli, command, helpDescription, parseCommandLine, readPackageIdentity, versionLine } from '../src/commendatore.js';
+import type { ExitCode } from '../src/commendatore.js';
 
 const EXIT_CODES: ExitCode[] = [
     { code: 0, description: 'todo bien' },
