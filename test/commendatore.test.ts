@@ -204,6 +204,23 @@ describe('commendatore', function () {
             assert.equal(commandLine.lang, 'es');
             assert.deepEqual(written, ['my-tool v1.2.3\n']);
         });
+        it('localizes the help texts given as functions of the language, and passes the language to parse', async function () {
+            const moduleUrl = await fakePackage({ name: 'my-tool', version: '1.2.3' });
+            const help = { description: '', examples: [] as string[], lang: '' };
+            parseCommandLine({
+                moduleUrl,
+                description: function (lang) { return lang === 'es' ? 'Hace algo.' : 'Does something.'; },
+                examples: function (lang) { return [`my-tool --lang=${lang}`]; },
+                exitCodes: function (lang) { return [{ code: 0, description: lang === 'es' ? 'listo' : 'done' }]; },
+                argv: ['--lang=es'],
+            }, function (base, argv, lang) {
+                help.description = base.help.description;
+                help.examples = base.help.examples;
+                help.lang = lang;
+                return cli({ ...base }, undefined, argv);
+            }, { write: function () {} });
+            assert.deepEqual(help, { description: 'Hace algo.\n\nCódigos de salida:\n  0  listo', examples: ['my-tool --lang=es'], lang: 'es' });
+        });
         it('show allows omitting the version line', async function () {
             const moduleUrl = await fakePackage({ name: 'my-tool', version: '1.2.3' });
             const written: string[] = [];

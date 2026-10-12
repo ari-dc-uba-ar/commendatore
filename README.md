@@ -63,6 +63,10 @@ if (import.meta.main) {
 in each one (`flags: { ...base.flags, ... }`). If it is forgotten, `--lang` in that command is an
 unknown flag and cleye reports it as an error.
 
+For the help to be in the language of the messages too, `description`, `examples` and
+`exitCodes` can be functions of the language (`function (lang) { ... }`), and `parse` receives
+the language as its third parameter for the descriptions of its commands and flags.
+
 
 ## Language of the messages
 

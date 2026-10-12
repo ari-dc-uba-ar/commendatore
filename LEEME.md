@@ -97,11 +97,19 @@ if (import.meta.main) {
 incluirlo en cada uno (`flags: { ...base.flags, ... }`). Si se olvida, `--lang` en ese comando es
 un flag desconocido y cleye lo informa como error.
 
+Para que la ayuda también salga en el idioma de los mensajes, `description`, `examples` y
+`exitCodes` pueden ser funciones del idioma (`function (lang) { ... }`), y `parse` recibe el
+idioma como tercer parámetro para las descripciones de sus comandos y flags.
+
 <!--lang:en--]
 
 `base.flags` brings `--lang`: if the tool declares its own flags, or commands, it must include it
 in each one (`flags: { ...base.flags, ... }`). If it is forgotten, `--lang` in that command is an
 unknown flag and cleye reports it as an error.
+
+For the help to be in the language of the messages too, `description`, `examples` and
+`exitCodes` can be functions of the language (`function (lang) { ... }`), and `parse` receives
+the language as its third parameter for the descriptions of its commands and flags.
 
 [!--lang:es-->
 

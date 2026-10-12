@@ -104,13 +104,20 @@ export interface BaseCliOptions {
     };
 }
 
+/** A help text that may depend on the language of the messages. */
+export type Localized<T> = T | ((lang: string) => T);
+
 export interface CommandLineDefinition {
     /** `import.meta.url` of the -cli module: package.json is searched upwards from its folder. */
     moduleUrl: string;
-    description: string;
-    examples: string[];
-    exitCodes: readonly ExitCode[];
+    description: Localized<string>;
+    examples: Localized<string[]>;
+    exitCodes: Localized<readonly ExitCode[]>;
     argv: readonly string[];
+}
+
+function localize<T>(value: Localized<T>, lang: string): T {
+    return value instanceof Function ? value(lang) : value;
 }
 
 export interface VersionLineOptions<Parsed> {
@@ -179,12 +186,13 @@ export function helpDescription(description: string, exitCodes: readonly ExitCod
 
 /**
  * `parse` calls `cli` with the base options (spread) and the tool's own parameters and flags, so cleye infers
- * the types. cleye shows the help or the version and ends the process on `--help`, `--version` or an unknown flag;
+ * the types; it receives `lang` to localize the help of its commands and flags.
+ * cleye shows the help or the version and ends the process on `--help`, `--version` or an unknown flag;
  * otherwise the version line is written, unless `versionLineOptions.show` says otherwise.
  */
 export function parseCommandLine<Parsed>(
     definition: CommandLineDefinition,
-    parse: (base: BaseCliOptions, argv: string[]) => Parsed,
+    parse: (base: BaseCliOptions, argv: string[], lang: string) => Parsed,
     versionLineOptions: VersionLineOptions<Parsed> = {},
 ): CommandLine<Parsed> {
     let langFlag: string | undefined;
@@ -205,10 +213,10 @@ export function parseCommandLine<Parsed>(
             lang: { type: String, description: translator(i18n, lang)('langFlagDescription'), placeholder: '<lang>' },
         },
         help: {
-            description: helpDescription(definition.description, definition.exitCodes, lang),
-            examples: definition.examples,
+            description: helpDescription(localize(definition.description, lang), localize(definition.exitCodes, lang), lang),
+            examples: localize(definition.examples, lang),
         },
-    }, [...definition.argv]);
+    }, [...definition.argv], lang);
     if (versionLineOptions.show === undefined || versionLineOptions.show(parsed)) {
         const write = versionLineOptions.write ?? function (text: string) { process.stdout.write(text); };
         write(versionLine(identity) + '\n');
