@@ -1,6 +1,6 @@
 {
   "name": "commendatore",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "Common way to build the command line of the tools: version on the first line, exit codes in the help, strict flags, --lang with i18n of the messages and confirmation of actions, on top of cleye",
   "author": "ari.dc.uba.ar",
   "license": "MIT",
