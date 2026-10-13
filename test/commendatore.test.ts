@@ -161,7 +161,11 @@ describe('commendatore', function () {
 
     it('helpDescription adds the exit codes, in the given language', function () {
         assert.equal(helpDescription('Does something.', EXIT_CODES, 'en'), 'Does something.\n\nExit codes:\n  0  all ok\n  3  configuration error');
-        assert.equal(helpDescription('Hace algo.', [{ code: 0, description: 'listo' }], 'es'), 'Hace algo.\n\nCódigos de salida:\n  0  listo');
+        assert.equal(helpDescription('Hace algo.', [{ code: 0, description: 'listo' }], 'es'), 'Hace algo.\n\nExit codes:\n  0  listo');
+    });
+
+    it('helpDescription omits the heading when there are no exit codes', function () {
+        assert.equal(helpDescription('Does something.', [], 'en'), 'Does something.');
     });
 
     describe('parseCommandLine', function () {
@@ -219,7 +223,7 @@ describe('commendatore', function () {
                 help.lang = lang;
                 return cli({ ...base }, undefined, argv);
             }, { write: function () {} });
-            assert.deepEqual(help, { description: 'Hace algo.\n\nCódigos de salida:\n  0  listo', examples: ['my-tool --lang=es'], lang: 'es' });
+            assert.deepEqual(help, { description: 'Hace algo.\n\nExit codes:\n  0  listo', examples: ['my-tool --lang=es'], lang: 'es' });
         });
         it('show allows omitting the version line', async function () {
             const moduleUrl = await fakePackage({ name: 'my-tool', version: '1.2.3' });

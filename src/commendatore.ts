@@ -31,7 +31,7 @@ export const i18n: I18n<typeof messages> = {
     messages: {
         en: messages,
         es: {
-            exitCodes: 'Códigos de salida:',
+            exitCodes: 'Exit codes:', // suena más natural que su traducción al castellano.
             langFlagDescription: 'Idioma de los mensajes (por omisión, se detecta del entorno)',
             langFlagNeedsValue: '--lang necesita un idioma, por ejemplo --lang=es',
             noPackageJsonInFoldersContaining1: 'No hay package.json en las carpetas que contienen a $1',
@@ -112,7 +112,8 @@ export interface CommandLineDefinition {
     moduleUrl: string;
     description: Localized<string>;
     examples: Localized<string[]>;
-    exitCodes: Localized<readonly ExitCode[]>;
+    /** Omitted when the meaning is the usual one (0 = ok, other = error). */
+    exitCodes?: Localized<readonly ExitCode[]>;
     argv: readonly string[];
 }
 
@@ -176,6 +177,7 @@ export function versionLine(identity: PackageIdentity): string {
 }
 
 export function helpDescription(description: string, exitCodes: readonly ExitCode[], lang: string = detectLanguage()): string {
+    if (exitCodes.length === 0) return description;
     return [
         description,
         '',
@@ -213,7 +215,7 @@ export function parseCommandLine<Parsed>(
             lang: { type: String, description: translator(i18n, lang)('langFlagDescription'), placeholder: '<lang>' },
         },
         help: {
-            description: helpDescription(localize(definition.description, lang), localize(definition.exitCodes, lang), lang),
+            description: helpDescription(localize(definition.description, lang), localize(definition.exitCodes ?? [], lang), lang),
             examples: localize(definition.examples, lang),
         },
     }, [...definition.argv], lang);
