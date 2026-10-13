@@ -1,4 +1,4 @@
-<!--multilang v0 es:LEEME.md en:README.md -->
+<!--multilang v0 es:LEEME.md en:README.md it:LEGGIMI.md -->
 # commendatore
 <!--lang:es-->
 
@@ -7,6 +7,10 @@ Forma común de armar la línea de comandos de las herramientas: versión en la 
 <!--lang:en--]
 
 Common way to build the command line of the tools: version on the first line, exit codes in the help, strict flags, --lang with i18n of the messages and confirmation of actions, on top of cleye
+
+[!--lang:it--]
+
+Modo comune di costruire la riga di comando degli strumenti: versione nella prima riga, codici di uscita nella guida, flag rigorosi, --lang con i18n dei messaggi e conferma delle azioni, basato su cleye
 
 [!--lang:*-->
 
@@ -20,7 +24,8 @@ Common way to build the command line of the tools: version on the first line, ex
 
 idioma: ![castellano](https://raw.githubusercontent.com/codenautas/multilang/master/img/lang-es.png)
 también disponible en:
-[![inglés](https://raw.githubusercontent.com/codenautas/multilang/master/img/lang-en.png)](README.md)
+[![inglés](https://raw.githubusercontent.com/codenautas/multilang/master/img/lang-en.png)](README.md) -
+[![italiano](https://raw.githubusercontent.com/codenautas/multilang/master/img/lang-it.png)](LEGGIMI.md)
 
 <!--lang:es-->
 
@@ -44,6 +49,17 @@ Common way to build the command line of the tools (the `*-cli` modules), on top 
 * unknown flags are an error (`strictFlags`);
 * every command accepts `--lang` and the messages are shown in that language.
 
+[!--lang:it--]
+
+Modo comune di costruire la riga di comando degli strumenti (i moduli `*-cli`), basato su
+[cleye](https://www.npmjs.com/package/cleye):
+
+* il nome e la versione vengono dal `package.json` del pacchetto;
+* la prima riga dell'output è `nome vX.Y.Z` (si può omettere, ad esempio quando l'output è JSON);
+* la guida elenca i codici di uscita;
+* i flag sconosciuti sono un errore (`strictFlags`);
+* tutti i comandi accettano `--lang` e i messaggi vengono mostrati in quella lingua.
+
 [!--lang:es-->
 
 Los parámetros, flags y comandos se definen con cleye, que infiere sus tipos. `cli` y `command`
@@ -54,6 +70,11 @@ se importan de commendatore, para que las herramientas no dependan de cleye dire
 The parameters, flags and commands are defined with cleye, which infers their types. `cli` and
 `command` are imported from commendatore, so the tools do not depend on cleye directly.
 
+[!--lang:it--]
+
+I parametri, i flag e i comandi si definiscono con cleye, che ne deduce i tipi. `cli` e `command`
+si importano da commendatore, così gli strumenti non dipendono direttamente da cleye.
+
 [!--lang:es-->
 
 ## Uso
@@ -61,6 +82,10 @@ The parameters, flags and commands are defined with cleye, which infers their ty
 <!--lang:en--]
 
 ## Usage
+
+[!--lang:it--]
+
+## Uso
 
 [!--lang:*-->
 
@@ -111,6 +136,16 @@ For the help to be in the language of the messages too, `description`, `examples
 `exitCodes` can be functions of the language (`function (lang) { ... }`), and `parse` receives
 the language as its third parameter for the descriptions of its commands and flags.
 
+[!--lang:it--]
+
+`base.flags` porta `--lang`: se lo strumento dichiara i propri flag, o comandi, deve includerlo
+in ciascuno (`flags: { ...base.flags, ... }`). Se viene dimenticato, `--lang` in quel comando è un
+flag sconosciuto e cleye lo segnala come errore.
+
+Perché anche la guida sia nella lingua dei messaggi, `description`, `examples` ed `exitCodes`
+possono essere funzioni della lingua (`function (lang) { ... }`), e `parse` riceve la lingua come
+terzo parametro per le descrizioni dei suoi comandi e flag.
+
 [!--lang:es-->
 
 ## Idioma de los mensajes
@@ -118,6 +153,10 @@ the language as its third parameter for the descriptions of its commands and fla
 <!--lang:en--]
 
 ## Language of the messages
+
+[!--lang:it--]
+
+## Lingua dei messaggi
 
 [!--lang:es-->
 
@@ -137,6 +176,16 @@ The language is the one of `--lang`; if absent, the one of the environment (`LAN
 Each module declares its messages with English as the base (which defines the keys) and the
 other languages partial: what is missing is shown in English. The keys are _camelCase_ and the
 numbers denote parameters (`$1`, `$2`...):
+
+[!--lang:it--]
+
+La lingua è quella di `--lang`; se manca, quella dell'ambiente (`LANGUAGE`, `LC_ALL`,
+`LC_MESSAGES`, `LANG`); altrimenti, quella che il sistema operativo comunica a Node; e altrimenti,
+l'inglese (`detectLanguage`).
+
+Ogni modulo dichiara i propri messaggi con l'inglese come base (che definisce le chiavi) e le
+altre lingue parziali: ciò che manca viene mostrato in inglese. Le chiavi sono in _camelCase_ e i
+numeri indicano i parametri (`$1`, `$2`...):
 
 [!--lang:*-->
 
@@ -167,6 +216,10 @@ message('deleteFile1In2', 'a.txt', 'docs'); // "¿borrar a.txt en docs?" with la
 
 ## Confirming actions
 
+[!--lang:it--]
+
+## Confermare le azioni
+
 [!--lang:es-->
 
 Cuando una herramienta va a hacer algo que el usuario tiene que aprobar (borrar un archivo, tocar
@@ -180,6 +233,13 @@ When a tool is about to do something the user has to approve (delete a file, tou
 the command line has a boolean flag: present is yes to all, `=false` is no to all, and if absent
 it asks item by item. `createConfirmer` receives that decision and returns the function that
 confirms each item:
+
+[!--lang:it--]
+
+Quando uno strumento sta per fare qualcosa che l'utente deve approvare (cancellare un file, toccare
+l'indice di git), la riga di comando ha un flag booleano: presente è sì a tutto, `=false` è no a
+tutto, e se manca si chiede elemento per elemento. `createConfirmer` riceve quella decisione e
+restituisce la funzione che conferma ogni elemento:
 
 [!--lang:*-->
 
@@ -211,6 +271,13 @@ else = no. Without a terminal (i.e. in CI) there is nobody to answer and it is n
 (`needs-tty`). The function only writes the question: reporting what was not done is up to each
 tool.
 
+[!--lang:it--]
+
+Risposte: `y` o `s` = sì; `a` (con `allowAll`) = sì a quello e a tutti i successivi; qualsiasi
+altra cosa = no. Senza terminale (ad esempio in CI) non c'è nessuno che risponda e non si conferma
+(`needs-tty`). La funzione scrive solo la domanda: segnalare ciò che non è stato fatto spetta a
+ciascuno strumento.
+
 [!--lang:es-->
 
 ## Licencia
@@ -218,6 +285,10 @@ tool.
 <!--lang:en--]
 
 ## License
+
+[!--lang:it--]
+
+## Licenza
 
 [!--lang:*-->
 

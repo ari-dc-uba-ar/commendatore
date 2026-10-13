@@ -11,7 +11,8 @@ Common way to build the command line of the tools: version on the first line, ex
 
 language: ![English](https://raw.githubusercontent.com/codenautas/multilang/master/img/lang-en.png)
 also available in:
-[![Spanish](https://raw.githubusercontent.com/codenautas/multilang/master/img/lang-es.png)](LEEME.md)
+[![Spanish](https://raw.githubusercontent.com/codenautas/multilang/master/img/lang-es.png)](LEEME.md) -
+[![Italian](https://raw.githubusercontent.com/codenautas/multilang/master/img/lang-it.png)](LEGGIMI.md)
 
 
 Common way to build the command line of the tools (the `*-cli` modules), on top of

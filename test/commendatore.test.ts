@@ -148,6 +148,7 @@ describe('commendatore', function () {
             const withoutVersion = await fakePackage({ name: 'my-tool' });
             assert.throws(function () { readPackageIdentity(withoutVersion, 'en'); }, /package\.json has no "version"$/);
             assert.throws(function () { readPackageIdentity(withoutVersion, 'es'); }, /package\.json no tiene "version"$/);
+            assert.throws(function () { readPackageIdentity(withoutVersion, 'it'); }, /package\.json non ha "version"$/);
             const withoutName = await fakePackage({ version: '1.0.0' });
             assert.throws(function () { readPackageIdentity(withoutName, 'en'); }, /package\.json has no "name"$/);
             const notAnObject = await fakePackage([]);

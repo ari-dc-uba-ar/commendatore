@@ -39,6 +39,14 @@ export const i18n: I18n<typeof messages> = {
             file1LacksName: '$1 no tiene "name"',
             file1LacksVersion: '$1 no tiene "version"',
         },
+        it: {
+            langFlagDescription: "Lingua dei messaggi (per impostazione predefinita, rilevata dall'ambiente)",
+            langFlagNeedsValue: '--lang richiede una lingua, ad esempio --lang=it',
+            noPackageJsonInFoldersContaining1: "Non c'è nessun package.json nelle cartelle che contengono $1",
+            file1IsNotAnObject: '$1 non contiene un oggetto',
+            file1LacksName: '$1 non ha "name"',
+            file1LacksVersion: '$1 non ha "version"',
+        },
     },
 };
 
